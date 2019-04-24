@@ -7,7 +7,7 @@ const http = require('http');
 
 var _ = require('lodash');
 
-accountid = 'your bot accountID';
+accountid = 'bots account ID';
 status = 'status you want';
 
 let eg = new EGClient({
@@ -116,7 +116,7 @@ let eg = new EGClient({
           fs.writeFile('file.json', html, 'utf-8', function (err) {
                 if (err) throw err;
                 console.log('api to json complete');
-              )};
+              });
           var contents = fs.readFileSync("file.json");
           // Define to JSON type
            var jsonContent = JSON.parse(contents);
@@ -124,15 +124,15 @@ let eg = new EGClient({
            var idname =  jsonContent.id;
           console.log(idname);
           member.clearEmote(member.jid);
-          member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + skinid + "." + skinid, member.jid);
+          member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + idname + "." + idname, member.jid);
           fs.unlink('file.json', (err) => {
             if (err) throw err;
-            console.log('successfully deleted temperary json file'));
-          }});
-          };
+            console.log('successfully deleted temperary json file');
+        
+          })});
 
 
-  catch(e){
+  }catch(e){
 communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
 }
 });
