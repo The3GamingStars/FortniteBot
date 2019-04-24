@@ -4,8 +4,6 @@ const EInputType  = require('epicgames-client').EInputType;
 const rp = require('request-promise');
 const fs = require('fs');
 const http = require('http');
-const url = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=omega';
-
 
 var _ = require('lodash');
 
@@ -80,8 +78,27 @@ let eg = new EGClient({
               }
           });
       }
-      if(args[0] == "!skin"){
-    if(args[1] == "on" || args[1] == "off") {
+     
+      if (args[0] == "!backbling"){
+          c_party.members.forEach(async member => {
+              try{
+                    member.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/" + args[1] + "." + args[1], member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set backbling because it is invalid backbling!');
+              }
+          });
+      }
+     
+      if (args[0] == "!banner"){
+          c_party.members.forEach(async member => {
+              try{
+                    member.setBRBanner(args[1], args[2], 99999999, member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set banner because it is invalid banner!');
+              }
+          });
+      }
+        if(args[0] == "!skin"){
        c_party.members.forEach(async member => {
        try{
 
@@ -119,29 +136,7 @@ let eg = new EGClient({
 communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
 }
 });
-}};
-     
-      if (args[0] == "!backbling"){
-          c_party.members.forEach(async member => {
-              try{
-                    
-                    member.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/" + args[1] + "." + args[1], member.jid);
-              }catch(e){
-                  communicator.sendMessage(data.friend.id, 'Cant set backbling because it is invalid backbling!');
-              }
-          });
-      }
-     
-      if (args[0] == "!banner"){
-          c_party.members.forEach(async member => {
-              try{
-                    member.setBRBanner(args[1], args[2], 99999999, member.jid);
-              }catch(e){
-                  communicator.sendMessage(data.friend.id, 'Cant set banner because it is invalid banner!');
-              }
-          });
-      }
-        
+};
       if(args[0] == "!ready"){
           if(args[1] == "on" || args[1] == "off") {
              c_party.members.forEach(async member => {
