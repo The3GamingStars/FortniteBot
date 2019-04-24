@@ -1,6 +1,11 @@
 const EGClient = require('epicgames-client').Client;
 const Fortnite = require('epicgames-fortnite-client');
 const EInputType  = require('epicgames-client').EInputType;
+const rp = require('request-promise');
+const fs = require('fs');
+const http = require('http');
+const url = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=omega';
+
 
 var _ = require('lodash');
 
@@ -52,7 +57,7 @@ let eg = new EGClient({
         }
         
       var args = data.message.split(" ").toUpperCase;
-      if (args[0] == "!skin"){
+      if (args[0] == "!skinid"){
           c_party.members.forEach(async member => {
               try{
                     member.clearEmote(member.jid);
@@ -75,10 +80,53 @@ let eg = new EGClient({
               }
           });
       }
+      if(args[0] == "!skin"){
+          if(args[1] == "on" || args[1] == "off") {
+             c_party.members.forEach(async member => {
+             try{
+                    var name = args[1];
+                    var website = "http://api-public-service.battledash.co/fortnite/cosmetics/search?q=" + name;
+                    const file = fs.createWriteStream("file.json");
+                    const request = http.get(website, function(response) {
+                    response.pipe(file);
+                    });
+                 
+                    rp(website)
+                      .then(function(html){
+                        //success!
+                      //  console.log(html);
+                    fs.writeFile('file.json', html, 'utf-8', function (err) {
+                          if (err) throw err;
+                          console.log('api to json complete');
+                    var contents = fs.readFileSync("file.json");
+                    // Define to JSON type
+                     var jsonContent = JSON.parse(contents);
+                    // Get Value from JSON
+                     var idname =  jsonContent.id;
+                    console.log(idname);
+                    member.clearEmote(member.jid);
+                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + skinid + "." + skinid, member.jid);
+                    fs.unlink('file.json', (err) => {
+                      if (err) throw err;
+                      console.log('successfully deleted temperary json file');
+                    });
+
+                        });
+                      })
+                      .catch(function(err){
+                        //handle error
+                      });
+                    
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
+              }
+          });
+      }
      
       if (args[0] == "!backbling"){
           c_party.members.forEach(async member => {
               try{
+                    
                     member.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/" + args[1] + "." + args[1], member.jid);
               }catch(e){
                   communicator.sendMessage(data.friend.id, 'Cant set backbling because it is invalid backbling!');
