@@ -81,47 +81,45 @@ let eg = new EGClient({
           });
       }
       if(args[0] == "!skin"){
-          if(args[1] == "on" || args[1] == "off") {
-             c_party.members.forEach(async member => {
-             try{
-                    var name = args[1];
-                    var website = "http://api-public-service.battledash.co/fortnite/cosmetics/search?q=" + name;
-                    const file = fs.createWriteStream("file.json");
-                    const request = http.get(website, function(response) {
-                    response.pipe(file);
-                    });
-                 
-                    rp(website)
-                      .then(function(html){
-                        //success!
-                      //  console.log(html);
-                    fs.writeFile('file.json', html, 'utf-8', function (err) {
-                          if (err) throw err;
-                          console.log('api to json complete');
-                    var contents = fs.readFileSync("file.json");
-                    // Define to JSON type
-                     var jsonContent = JSON.parse(contents);
-                    // Get Value from JSON
-                     var idname =  jsonContent.id;
-                    console.log(idname);
-                    member.clearEmote(member.jid);
-                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + skinid + "." + skinid, member.jid);
-                    fs.unlink('file.json', (err) => {
-                      if (err) throw err;
-                      console.log('successfully deleted temperary json file');
-                    });
+    if(args[1] == "on" || args[1] == "off") {
+       c_party.members.forEach(async member => {
+       try{
 
-                        });
-                      })
-                      .catch(function(err){
-                        //handle error
-                      });
-                    
-              }catch(e){
-                  communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
-              }
+          var name = args[1];
+          var website = "http://api-public-service.battledash.co/fortnite/cosmetics/search?q=" + name;
+          const file = fs.createWriteStream("file.json");
+          const request = http.get(website, function(response) {
+          response.pipe(file);
           });
-      }
+
+          rp(website)
+            .then(function(html){
+              //success!
+            //  console.log(html);
+          fs.writeFile('file.json', html, 'utf-8', function (err) {
+                if (err) throw err;
+                console.log('api to json complete');
+              )};
+          var contents = fs.readFileSync("file.json");
+          // Define to JSON type
+           var jsonContent = JSON.parse(contents);
+          // Get Value from JSON
+           var idname =  jsonContent.id;
+          console.log(idname);
+          member.clearEmote(member.jid);
+          member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + skinid + "." + skinid, member.jid);
+          fs.unlink('file.json', (err) => {
+            if (err) throw err;
+            console.log('successfully deleted temperary json file'));
+          }});
+          };
+
+
+  catch(e){
+communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
+}
+});
+}};
      
       if (args[0] == "!backbling"){
           c_party.members.forEach(async member => {
