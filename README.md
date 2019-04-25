@@ -4,7 +4,8 @@ using Kysune library
 can be download in the following command's                                                                                              
 npm i node-epicgames-client --save                                                
 npm i node-epicgames-fortnite-client --save                                                                                              
-npm i loadsh --save           
+npm i loadsh --save   
+npm install node-fetch --save
                                                                                                                                       
-and the after configurating your setting in the app simply do                                                                           
+and the after configurating your settings in the .js file, simply do                                                                           
 node index.js
