@@ -1,14 +1,12 @@
 const EGClient = require('epicgames-client').Client;
 const Fortnite = require('epicgames-fortnite-client');
 const EInputType  = require('epicgames-client').EInputType;
-const rp = require('request-promise');
-const fs = require('fs');
-const http = require('http');
+const fetch = require('node-fetch');
 
 var _ = require('lodash');
 
-accountid = 'bots account ID';
-status = 'status you want';
+accountid = 'Account ID';
+status = 'Bot is Online';
 
 let eg = new EGClient({
     email: 'email',
@@ -54,12 +52,39 @@ let eg = new EGClient({
               communicator.sendMessage(data.friend.id, 'Commands: !skin, !emote, !backbling, !banner, !stop');
         }
         
-      var args = data.message.split(" ").toUpperCase;
+      var args = data.message.split(" ");
       if (args[0] == "!skinid"){
           c_party.members.forEach(async member => {
               try{
                     member.clearEmote(member.jid);
                     member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
+              }
+          });
+      }
+      if (args[0] == "!skin"){
+          c_party.members.forEach(async member => {
+              try{
+
+
+function jsonid(jidd) {
+var nameid = jidd;
+console.log(nameid);
+member.clearEmote(member.jid);
+                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
+
+}
+var name = args[1];
+var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
+var fullwebsite = website + name;
+fetch(fullwebsite)
+    .then(res => res.json())
+//    .then(json => console.log(json.id));
+    .then(json => jsonid(json.id));
+
+                  //  member.clearEmote(member.jid);
+                  //  member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
               }catch(e){
                   communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
               }
@@ -90,6 +115,7 @@ let eg = new EGClient({
       }
      
       if (args[0] == "!banner"){
+          args = data.message.split(" ").toUpperCase;
           c_party.members.forEach(async member => {
               try{
                     member.setBRBanner(args[1], args[2], 99999999, member.jid);
@@ -98,45 +124,7 @@ let eg = new EGClient({
               }
           });
       }
-        if(args[0] == "!skin"){
-       c_party.members.forEach(async member => {
-       try{
-
-          var name = args[1];
-          var website = "http://api-public-service.battledash.co/fortnite/cosmetics/search?q=" + name;
-          const file = fs.createWriteStream("file.json");
-          const request = http.get(website, function(response) {
-          response.pipe(file);
-          });
-
-          rp(website)
-            .then(function(html){
-              //success!
-            //  console.log(html);
-          fs.writeFile('file.json', html, 'utf-8', function (err) {
-                if (err) throw err;
-                console.log('api to json complete');
-              });
-          var contents = fs.readFileSync("file.json");
-          // Define to JSON type
-           var jsonContent = JSON.parse(contents);
-          // Get Value from JSON
-           var idname =  jsonContent.id;
-          console.log(idname);
-          member.clearEmote(member.jid);
-          member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + idname + "." + idname, member.jid);
-          fs.unlink('file.json', (err) => {
-            if (err) throw err;
-            console.log('successfully deleted temperary json file');
         
-          })});
-
-
-  }catch(e){
-communicator.sendMessage(data.friend.id, 'Cant set skin because an invalid skin name was inputed!');
-}
-});
-};
       if(args[0] == "!ready"){
           if(args[1] == "on" || args[1] == "off") {
              c_party.members.forEach(async member => {
