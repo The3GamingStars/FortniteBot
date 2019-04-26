@@ -68,20 +68,20 @@ let eg = new EGClient({
               try{
 
 
-function jsonid(jidd) {
-var nameid = jidd;
-console.log(nameid);
-member.clearEmote(member.jid);
-                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
+                function jsonid(jidd) {
+                var nameid = jidd;
+                console.log(nameid);
+                member.clearEmote(member.jid);
+                                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
 
-}
-var name = args[1];
-var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
-var fullwebsite = website + name;
-fetch(fullwebsite)
-    .then(res => res.json())
-//    .then(json => console.log(json.id));
-    .then(json => jsonid(json.id));
+                }
+                var name = args[1];
+                var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
+                var fullwebsite = website + name;
+                fetch(fullwebsite)
+                    .then(res => res.json())
+                //    .then(json => console.log(json.id));
+                    .then(json => jsonid(json.id));
 
                   //  member.clearEmote(member.jid);
                   //  member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
