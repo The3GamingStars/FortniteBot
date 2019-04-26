@@ -51,7 +51,37 @@ let eg = new EGClient({
         if(data.message == 'help'){
               communicator.sendMessage(data.friend.id, 'Commands: !skin, !emote, !backbling, !banner, !stop');
         }
-        
+var argss = data.message;
+var skintrue = argss.includes(“!skin “);
+if (skintrue = true){
+          c_party.members.forEach(async member => {
+              try{
+
+
+                function jsonid(jidd) {
+                var nameid = jidd;
+                console.log(nameid);
+                member.clearEmote(member.jid);
+                                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
+
+                }
+                var na = argss;
+                var nam = na.replace(“!skin “, “”);
+                var name = nam.replace(“ “, “%20”);
+                var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
+                var fullwebsite = website + name;
+                fetch(fullwebsite)
+                    .then(res => res.json())
+                //    .then(json => console.log(json.id));
+                    .then(json => jsonid(json.id));
+
+                  //  member.clearEmote(member.jid);
+                  //  member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
+              }
+          });
+      }        
       var args = data.message.split(" ");
       if (args[0] == "!skinid"){
           c_party.members.forEach(async member => {
@@ -63,7 +93,7 @@ let eg = new EGClient({
               }
           });
       }
-      if (args[0] == "!skin"){
+      if (args[0] == "!skinold"){
           c_party.members.forEach(async member => {
               try{
 
