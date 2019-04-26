@@ -51,9 +51,9 @@ let eg = new EGClient({
         if(data.message == 'help'){
               communicator.sendMessage(data.friend.id, 'Commands: !skin, !emote, !backbling, !banner, !stop');
         }
-var argss = data.message;
-var skintrue = argss.includes(“!skin “);
-if (skintrue = true){
+    var argss = data.message;
+    var skintrue = argss.includes("!skin ");
+    if (skintrue = true){
           c_party.members.forEach(async member => {
               try{
 
@@ -66,8 +66,8 @@ if (skintrue = true){
 
                 }
                 var na = argss;
-                var nam = na.replace(“!skin “, “”);
-                var name = nam.replace(“ “, “%20”);
+                var nam = na.replace("!skin ", "");
+                var name = nam.replace(" ", "%20");
                 var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
                 var fullwebsite = website + name;
                 fetch(fullwebsite)
