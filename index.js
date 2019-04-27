@@ -49,7 +49,7 @@ let eg = new EGClient({
     fortnite.communicator.on('friend:message', async data => {
 
         if(data.message == 'help'){
-              communicator.sendMessage(data.friend.id, 'Commands: !skin, !emote, !backbling, !banner, !stop');
+              communicator.sendMessage(data.friend.id, 'Commands: !skinid, !skin, !emoteid, !emote, !backbling, !banner, !stop');
         }
     var argss = data.message;
     var skintrue = argss.includes("!skin ");
