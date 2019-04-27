@@ -49,7 +49,7 @@ let eg = new EGClient({
     fortnite.communicator.on('friend:message', async data => {
 
         if(data.message == 'help'){
-              communicator.sendMessage(data.friend.id, 'Commands: !skinid, !skin, !emoteid, !emote, !backbling, !banner, !stop');
+              communicator.sendMessage(data.friend.id, 'Commands: !skinid, !skin, !emoteid, !emote, !backblingid, !backbling, !banner, !stop');
         }
     var argss = data.message;
     var skintrue = argss.includes("!skin ");
@@ -62,7 +62,7 @@ let eg = new EGClient({
                 var nameid = jidd;
                 console.log(nameid);
                 member.clearEmote(member.jid);
-                                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
+                member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
 
                 }
                 var na = argss;
@@ -70,6 +70,9 @@ let eg = new EGClient({
                 var name = nam.replace(" ", "%20");
                 var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
                 var fullwebsite = website + name;
+                if (fullwebsite.toLowerCase = "https://api-public-service.battledash.co/fortnite/cosmetics/search?q=reaper") {
+                    var fullwebsite = "https://api-public-service.battledash.co/fortnite/cosmetics/search/id?q=CID_084_Athena_Commando_M_Assassin"
+                }
                 fetch(fullwebsite)
                     .then(res => res.json())
                 //    .then(json => console.log(json.id));
@@ -84,6 +87,34 @@ let eg = new EGClient({
       }   
     var emotetrue = argss.includes("!emote ");
     if (emotetrue = true){
+          c_party.members.forEach(async member => {
+              try{
+
+
+                function jsonid(jidd) {
+                var nameid = jidd;
+                console.log(nameid);
+                member.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + nameid + "." + nameid, member.jid);
+                }
+                var na = argss;
+                var nam = na.replace("!emote ", "");
+                var name = nam.replace(" ", "%20");
+                var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
+                var fullwebsite = website + name;
+                fetch(fullwebsite)
+                    .then(res => res.json())
+                //    .then(json => console.log(json.id));
+                    .then(json => jsonid(json.id));
+
+                  //  member.clearEmote(member.jid);
+                  //  member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
+              }
+          });
+      }        
+    var backtrue = argss.includes("!backbling ");
+    if (backtrue = true){
           c_party.members.forEach(async member => {
               try{
 
@@ -162,7 +193,7 @@ let eg = new EGClient({
           });
       }
      
-      if (args[0] == "!backbling"){
+      if (args[0] == "!backblingid"){
           c_party.members.forEach(async member => {
               try{
                     member.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/" + args[1] + "." + args[1], member.jid);
