@@ -81,6 +81,34 @@ let eg = new EGClient({
                   communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
               }
           });
+      }   
+    var emotetrue = argss.includes("!emote ");
+    if (emotetrue = true){
+          c_party.members.forEach(async member => {
+              try{
+
+
+                function jsonid(jidd) {
+                var nameid = jidd;
+                console.log(nameid);
+                member.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + nameid + "." + nameid, member.jid);
+                }
+                var na = argss;
+                var nam = na.replace("!emote ", "");
+                var name = nam.replace(" ", "%20");
+                var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
+                var fullwebsite = website + name;
+                fetch(fullwebsite)
+                    .then(res => res.json())
+                //    .then(json => console.log(json.id));
+                    .then(json => jsonid(json.id));
+
+                  //  member.clearEmote(member.jid);
+                  //  member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
+              }catch(e){
+                  communicator.sendMessage(data.friend.id, 'Cant set skin because it is invalid skin!');
+              }
+          });
       }        
       var args = data.message.split(" ");
       if (args[0] == "!skinid"){
@@ -102,7 +130,7 @@ let eg = new EGClient({
                 var nameid = jidd;
                 console.log(nameid);
                 member.clearEmote(member.jid);
-                                    member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
+                member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + nameid + "." + nameid, member.jid);
 
                 }
                 var name = args[1];
@@ -124,7 +152,7 @@ let eg = new EGClient({
             fortnite.communicator.updateStatus(args[1]);
             communicator.updateStatus(args[1]);
       }
-      if (args[0] == "!emote"){
+      if (args[0] == "!emoteid"){
           c_party.members.forEach(async member => {
               try{
                     member.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + args[1] + "." + args[1], member.jid);
