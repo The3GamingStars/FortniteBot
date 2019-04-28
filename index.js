@@ -70,9 +70,9 @@ let eg = new EGClient({
                 var name = nam.replace(" ", "%20");
                 var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
                 var fullwebsite = website + name;
-                if (fullwebsite.toLowerCase = "https://api-public-service.battledash.co/fortnite/cosmetics/search?q=reaper") {
-                    var fullwebsite = "https://api-public-service.battledash.co/fortnite/cosmetics/search/id?q=CID_084_Athena_Commando_M_Assassin"
-                }
+              //  if (fullwebsite.toLowerCase = "https://api-public-service.battledash.co/fortnite/cosmetics/search?q=reaper") {
+              //      var fullwebsite = "https://api-public-service.battledash.co/fortnite/cosmetics/search/id?q=CID_084_Athena_Commando_M_Assassin"
+               // }
                 fetch(fullwebsite)
                     .then(res => res.json())
                 //    .then(json => console.log(json.id));
