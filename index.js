@@ -125,7 +125,7 @@ let eg = new EGClient({
                 member.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + nameid + "." + nameid, member.jid);
                 }
                 var na = argss;
-                var nam = na.replace("!emote ", "");
+                var nam = na.replace("!backbling ", "");
                 var name = nam.replace(" ", "%20");
                 var website = 'https://api-public-service.battledash.co/fortnite/cosmetics/search?q=';
                 var fullwebsite = website + name;
